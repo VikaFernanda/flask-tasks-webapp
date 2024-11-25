@@ -15,9 +15,8 @@ phases:
   build:
     commands:
       - echo "Building Docker image"
-      - docker logout 654654369899.dkr.ecr.us-east-1.amazonaws.com || true
-      - aws ecr get-login-password | docker login --username AWS --password-stdin 654654369899.dkr.ecr.us-east-1.amazonaws.com/flask-webapp
-      - docker build -t flask-webapp:latest .
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 654654369899.dkr.ecr.us-east-1.amazonaws.com
+      - docker build -t flask-webapp .
       - docker tag flask-webapp:latest 654654369899.dkr.ecr.us-east-1.amazonaws.com/flask-webapp:latest
 
   post_build:
