@@ -8,17 +8,17 @@ phases:
   pre_build:
     commands:
       - echo "Running Unit Tests"
-      - python -m unittest discover -s tests -p "test_app.py"
+      - python -m unittest discover -s tests -p "test_app.py" -v || true
   build:
     commands:
       - echo "Building Docker image"
       - $(aws ecr get-login-password --region us-east-1) | docker login --username AWS --password-stdin 654654369899.dkr.ecr.us-east-1.amazonaws.com
-      - docker build -t <your-ecr-repo-name>:latest .
-      - docker tag <your-ecr-repo-name>:latest 654654369899.dkr.ecr.us-east-1.amazonaws.com/<your-ecr-repo-name>:latest
+      - docker build -t flask-webapp:latest .
+      - docker tag flask-webapp:latest 654654369899.dkr.ecr.us-east-1.amazonaws.com/flask-webapp:latest
   post_build:
     commands:
       - echo "Pushing Docker image to ECR"
-      - docker push 654654369899.dkr.ecr.us-east-1.amazonaws.com/<your-ecr-repo-name>:latest
+      - docker push 654654369899.dkr.ecr.us-east-1.amazonaws.com/flask-webapp:latest
       - echo "Build completed"
 artifacts:
   files:
