@@ -3,8 +3,10 @@ version: 0.2
 phases:
   install:
     runtime-versions:
+      docker: 20
       python: 3.12
     commands:
+      - echo "Installing Python dependencies"
       - pip install -r requirements.txt  # Install Python dependencies
 
   pre_build:
@@ -15,17 +17,17 @@ phases:
   build:
     commands:
       - echo "Building Docker image"
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 654654369899.dkr.ecr.us-east-1.amazonaws.com
+      - echo "Logging into ECR"
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - docker build -t flask-webapp .
-      - docker tag flask-webapp:latest 654654369899.dkr.ecr.us-east-1.amazonaws.com/flask-webapp:latest
+      - docker tag flask-webapp:latest 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/flask-webapp:latest
 
   post_build:
     commands:
       - echo "Pushing Docker image to ECR"
-      - docker push 654654369899.dkr.ecr.us-east-1.amazonaws.com/flask-webapp:latest
+      - docker push 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/flask-webapp:latest
       - echo "Build completed"
 
 artifacts:
   files:
     - '**/*'
-    
