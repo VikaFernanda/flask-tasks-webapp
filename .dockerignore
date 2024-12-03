@@ -1,3 +1,7 @@
 .venv
 .dockerignore
 .gitignore
+appspec.yml
+buildspec.yml
+Dockerfile
+Jenkinsfile
