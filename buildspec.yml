@@ -17,17 +17,18 @@ phases:
     commands:
       - echo "Building Docker image"
       - echo "Logging into ECR"
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - docker build -t flask-webapp .
-      - docker tag flask-webapp:latest 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/flask-webapp:latest
+      - docker tag flask-webapp:latest 654654369899.dkr.ecr.$AWS_REGION.amazonaws.com/flask-webapp:latest
 
   post_build:
     commands:
       - echo "Pushing Docker image to ECR"
-      - docker push 654654369899.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/flask-webapp:latest
+      - docker push 654654369899.dkr.ecr.$AWS_REGION.amazonaws.com/flask-webapp:latest
+      - echo "Creating imagedefinitions.json file..."
+      - printf '[{"name":"flask-webapp","imageUri":"%s"}]' "654654369899.dkr.ecr.$AWS_REGION.amazonaws.com/flask-webapp:latest" > imagedefinitions.json
       - echo "Build completed"
 
 artifacts:
   files:
-    - '**/*'
     - imagedefinitions.json
