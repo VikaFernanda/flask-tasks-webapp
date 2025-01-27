@@ -11,7 +11,7 @@ DB_NAME = "database.db"
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'fjgsftzrdjovzuey'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flaskpostgre:tVg1WF28yCTXeXkNl6Xq@flaskpostgre-1.cpxgsuaa8wqm.us-west-1.rds.amazonaws.com:5432/flaskpostgre'
     db.init_app(app)
     migrate.init_app(app, db)
     
@@ -37,6 +37,6 @@ def create_app():
 
 def create_database(app):
     with app.app_context():
-        if not path.exists('instance/' + DB_NAME):
-            db.create_all()
-            print('Created Database!')
+        # if not path.exists('instance/' + DB_NAME): # TODO: Modificar posteriormente para verificar se a tabela existe
+        db.create_all()
+        print('Database tables created!')
