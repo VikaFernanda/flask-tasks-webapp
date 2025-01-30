@@ -3,8 +3,8 @@
 # Exit on any error
 set -e
 
-# echo "Waiting for the database to be ready..."
-# sleep 5
+echo "Waiting for the database to be ready..."
+sleep 5
 
 echo "Running database migrations..."
 flask db upgrade
