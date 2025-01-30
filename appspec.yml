@@ -1,9 +1,0 @@
-version: 0.0
-Resources:
-  - TargetService:
-      Type: AWS::ECS::Service
-      Properties:
-        TaskDefinition: "arn:aws:ecs:us-east-1:654654369899:task-definition/flask-webapp:3"
-        LoadBalancerInfo:
-          ContainerName: "flask-webapp"
-          ContainerPort: 80
