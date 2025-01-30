@@ -5,3 +5,5 @@ appspec.yml
 buildspec.yml
 Dockerfile
 Jenkinsfile
+.env
+.pyc
