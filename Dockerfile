@@ -19,4 +19,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-CMD service nginx start && flask run --host=0.0.0.0 --port=80
+CMD flask db upgrade && service nginx start && flask run --host=0.0.0.0 --port=80
