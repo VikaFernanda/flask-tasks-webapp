@@ -9,8 +9,8 @@
 # echo "Running database migrations..."
 # flask db upgrade
 
-echo "Starting Nginx..."
-service nginx start
+# echo "Starting Nginx..."
+# service nginx start
 
-echo "Starting Flask app..."
-exec flask run --host=0.0.0.0
+# echo "Starting Flask app..."
+# exec flask run --host=0.0.0.0
