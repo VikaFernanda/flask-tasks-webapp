@@ -2,7 +2,7 @@ FROM python:3.12-slim AS build
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV FLASK_DEBUG False
+# ENV FLASK_DEBUG False
 
 WORKDIR /app
 
@@ -18,7 +18,12 @@ RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+EXPOSE 5000
 
-CMD sh -c "flask db upgrade && nginx -g 'daemon off;' & flask run --host=0.0.0.0"
+RUN flask db upgrade
+
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+
+# CMD sh -c "flask db upgrade && nginx -g 'daemon off;' & flask run --host=0.0.0.0"
 
 # CMD service nginx start && flask run --host=0.0.0.0 && flask db upgrade
