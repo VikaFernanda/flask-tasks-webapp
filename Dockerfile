@@ -20,4 +20,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 EXPOSE 5000
 
-CMD service nginx start && flask db upgrade && flask run --host=0.0.0.0
+CMD service nginx start && flask run --host=0.0.0.0
