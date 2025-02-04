@@ -20,8 +20,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 EXPOSE 5000
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+# COPY entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
 
-# CMD service nginx start && flask db upgrade && flask run --host=0.0.0.0
+# ENTRYPOINT ["/entrypoint.sh"]
+
+CMD service nginx start && flask db upgrade && flask run --host=0.0.0.0
