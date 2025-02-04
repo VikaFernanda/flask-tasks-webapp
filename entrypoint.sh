@@ -1,16 +1,14 @@
 #!/bin/sh
+set -e  # Exit on any error
 
-# Exit on any error
-# set -e
+# Start Nginx
+echo "Starting Nginx..."
+service nginx start
 
-# echo "Waiting for the database to be ready..."
-# sleep 5
+# Run database migrations
+echo "Running database migrations..."
+flask db upgrade
 
-# echo "Running database migrations..."
-# flask db upgrade
-
-# echo "Starting Nginx..."
-# service nginx start
-
-# echo "Starting Flask app..."
-# exec flask run --host=0.0.0.0
+# Start Flask app
+echo "Starting Flask application..."
+exec flask run --host=0.0.0.0
