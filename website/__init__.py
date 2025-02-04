@@ -1,21 +1,18 @@
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_migrate import Migrate
+from flask_mongoengine import MongoEngine
 from config import Config
 
-# Initialize database and migration
-db = SQLAlchemy()
-migrate = Migrate()
+# Initialize MongoDB
+db = MongoEngine()
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize extensions with the app
+    # Initialize MongoDB with the app
     db.init_app(app)
-    migrate.init_app(app, db)
 
     # Import models AFTER initializing db
     from .models import User, Task  
@@ -33,6 +30,6 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return db.session.get(User, int(user_id))
+        return User.objects(id=user_id).first()  # MongoDB query
 
     return app
