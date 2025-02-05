@@ -23,6 +23,6 @@ EXPOSE 5000
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
 
-# CMD service nginx start && flask db upgrade && flask run --host=0.0.0.0
+CMD service nginx start && flask run --host=0.0.0.0
