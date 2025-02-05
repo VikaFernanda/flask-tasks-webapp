@@ -11,6 +11,9 @@ service nginx start
 
 # Run database migrations
 echo "Running database migrations..."
+rm -rf migrations/versions/*
+flask db stamp base
+flask db migrate -m "Reinitializing"
 flask db upgrade
 
 # Start Flask app
